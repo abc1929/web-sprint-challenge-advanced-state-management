@@ -13,11 +13,13 @@ import { fetch_smurf } from "./actions";
 class App extends Component {
    constructor() {
       super();
+      // storing searchterm for the search functionality on smurfs
       this.state = {
          searchterm: "",
       };
    }
 
+   //GET smurfs on mount
    componentDidMount() {
       this.props.dispatch(fetch_smurf());
    }

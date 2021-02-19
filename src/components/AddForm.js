@@ -15,6 +15,8 @@ const AddForm = (props) => {
       setState({ ...state, [e.target.name]: e.target.value });
    };
 
+   // handleSubmit handles also error message generation logics.
+   // if there is a error, prevent submission.
    const handleSubmit = (e) => {
       e.preventDefault();
       let err = [];
@@ -60,6 +62,15 @@ const AddForm = (props) => {
    return (
       <section>
          <h2>Add Smurf</h2>
+         {/* display success prompt for a second when added successfully */}
+         <div
+            data-testid="successAlert"
+            className="alert alert-danger successmessage"
+            role="alert"
+            style={{ background: "#95f195", display: "none" }}
+         >
+            Smurf Added!
+         </div>
          <form onSubmit={handleSubmit}>
             <div className="form-group">
                <label htmlFor="name">Name:</label>
@@ -110,6 +121,7 @@ const AddForm = (props) => {
                   Error: {props.formError}
                </div>
             )}
+
             <button
             //    onClick={() => }
             >

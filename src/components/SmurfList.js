@@ -13,7 +13,7 @@ const SmurfList = (props) => {
    // }
    const location = useLocation();
 
-   // simple page search util
+   // simple page search util, filter through all smurfs against the searchterm
    const search = (term) => {
       return props.smurfs.filter(
          (i) =>
@@ -23,10 +23,12 @@ const SmurfList = (props) => {
       );
    };
 
+   // displaying Loading while isFetching
    if (props.isFetching) {
       return <h1>Loading...</h1>;
    }
 
+   // offering different renders depends on what route it is, prevent unnecessary computes
    if (location.pathname === "/search") {
       return (
          <div className="listContainer">

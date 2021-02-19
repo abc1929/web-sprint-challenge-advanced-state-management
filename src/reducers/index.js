@@ -9,27 +9,10 @@ import {
 } from "../actions";
 
 export const initialState = {
-   smurfs: [
-      // {
-      //    description:
-      //       "Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.",
-      //    id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-      //    name: "Poppa Smurf",
-      //    nickname: "Pops",
-      //    position: "Village Leader",
-      // },
-      // {
-      //    description:
-      //       "Smurfette's role in the village is that of any other smurf; chores, and helping out where she can, but for her specifically, she is often seen to be very active in organizing events.",
-      //    id: "JzdWIiOiIxMjM0NTY3ODkwIiwibmFtZ",
-      //    name: "Smurfette",
-      //    nickname: "Smurfette",
-      //    position: "Beautician",
-      // },
-   ],
+   smurfs: [],
    isFetching: false,
    networkError: "",
-   formError: "", // not using an object here since we display just one line of error, the message content is generated accordingly inline
+   formError: "", // not using an object for form errors since we display just one line of error, the error message content can be generated accordingly inline
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,6 +37,14 @@ const reducer = (state = initialState, action) => {
             networkError: "",
          };
       case ADD_SMURF_SUCCESS:
+         // shows a prompt
+         document.querySelector(".successmessage").style.display = "flex";
+         setTimeout(() => {
+            if (document.querySelector(".successmessage")) {
+               document.querySelector(".successmessage").style.display = "none";
+            }
+         }, 1500);
+
          return {
             ...state,
             isFetching: false,
