@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { add_smurf, set_formerror } from "../actions";
-import { v4 } from "uuid";
 
 const AddForm = (props) => {
    const [state, setState] = useState({
@@ -54,7 +53,9 @@ const AddForm = (props) => {
             nickname: "",
             description: "",
          });
-         props.dispatch(add_smurf({ ...state, id: v4() }));
+
+         // mock assigns id via date, no need to add it.
+         props.dispatch(add_smurf({ ...state }));
          props.dispatch(set_formerror(""));
       }
    };
@@ -62,6 +63,7 @@ const AddForm = (props) => {
    return (
       <section>
          <h2>Add Smurf</h2>
+
          {/* display success prompt for a second when added successfully */}
          <div
             data-testid="successAlert"

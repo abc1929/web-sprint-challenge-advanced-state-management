@@ -52,6 +52,12 @@ class App extends Component {
                      <SmurfList searchterm={this.state.searchterm} />
                   </main>
                </Route>
+
+               <Route path="/smurf/:id">
+                  <main>
+                     <SmurfList />
+                  </main>
+               </Route>
             </div>
          </BrowserRouter>
       );

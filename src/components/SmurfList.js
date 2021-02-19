@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink, useRouteMatch } from "react-router-dom";
 import Smurf from "./Smurf";
 import { connect } from "react-redux";
 
@@ -12,7 +12,7 @@ const SmurfList = (props) => {
    //     description: 'Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.'
    // }
    const location = useLocation();
-
+   const paramid = useRouteMatch().params?.id;
    // simple page search util, filter through all smurfs against the searchterm
    const search = (term) => {
       return props.smurfs.filter(
@@ -33,15 +33,40 @@ const SmurfList = (props) => {
       return (
          <div className="listContainer">
             {search(props.searchterm).map((i) => (
-               <Smurf key={i.id} smurf={i} />
+               <NavLink
+                  to={`/smurf/${i.id}`}
+                  key={i.id}
+                  style={{ textDecoration: "none", color: "black" }}
+               >
+                  <Smurf smurf={i} />
+               </NavLink>
             ))}
          </div>
       );
    }
+
+   if (paramid) {
+      return (
+         <div className="listContainer">
+            {props.smurfs
+               .filter((i) => String(i.id) === String(paramid))
+               .map((k) => (
+                  <Smurf key={k.id} smurf={k} />
+               ))}
+         </div>
+      );
+   }
+
    return (
       <div className="listContainer">
          {props.smurfs.map((i) => (
-            <Smurf key={i.id} smurf={i} />
+            <NavLink
+               key={i.id}
+               to={`/smurf/${i.id}`}
+               style={{ textDecoration: "none", color: "black" }}
+            >
+               <Smurf smurf={i} />
+            </NavLink>
          ))}
       </div>
    );
