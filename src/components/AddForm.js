@@ -18,21 +18,33 @@ const AddForm = (props) => {
    const handleSubmit = (e) => {
       e.preventDefault();
       let err = [];
-      for (let i of Object.keys(state)) {
+      for (let i of ["name", "position", "nickname"]) {
          if (state[i].length === 0) {
             err.push(i);
          }
       }
       if (err.length > 0) {
-         props.dispatch(
-            set_formerror(
-               err
-                  .reduce((a, b) => {
+         let errmessage = "";
+         switch (err.length) {
+            case 1:
+               errmessage = err[0] + " cannot be empty";
+               break;
+            case 2:
+               errmessage = err[0] + " and " + err[1] + " cannot be empty";
+               break;
+
+            // errors >2
+            default:
+               errmessage =
+                  err.reduce((a, b, i) => {
+                     if (i === err.length - 1) {
+                        return a + " and " + b;
+                     }
                      return a + b + ", ";
-                  }, "")
-                  .slice(0, -2) + " cannot be empty"
-            )
-         );
+                  }, "") + " cannot be empty";
+         }
+
+         props.dispatch(set_formerror(errmessage));
       } else {
          setState({
             name: "",
