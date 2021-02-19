@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Smurf from "./Smurf";
 import { connect } from "react-redux";
 
@@ -10,11 +11,31 @@ const SmurfList = (props) => {
    //     nickname: 'Pops',
    //     description: 'Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.'
    // }
+   const location = useLocation();
+
+   // simple page search util
+   const search = (term) => {
+      return props.smurfs.filter(
+         (i) =>
+            `${i.name} ${i.position} ${i.nickname} ${i.description}`.match(
+               RegExp(term, "i")
+            ) !== null
+      );
+   };
 
    if (props.isFetching) {
       return <h1>Loading...</h1>;
    }
 
+   if (location.pathname === "/search") {
+      return (
+         <div className="listContainer">
+            {search(props.searchterm).map((i) => (
+               <Smurf key={i.id} smurf={i} />
+            ))}
+         </div>
+      );
+   }
    return (
       <div className="listContainer">
          {props.smurfs.map((i) => (
