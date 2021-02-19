@@ -30,6 +30,7 @@ export const fetch_smurf = () => (dispatch) => {
 };
 
 export const add_smurf = (data) => (dispatch) => {
+   // after sucessful posting, we fetch again to update our smurf state, instead of updating state locally. I suppose this avoids possible conflicts in the long run.
    axios
       .post("http://localhost:3333/smurfs", data)
       .then((res) => {
